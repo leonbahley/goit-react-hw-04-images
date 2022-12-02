@@ -1,10 +1,10 @@
-import './Button.css';
+import css from './Button.module.css';
 import PropTypes from 'prop-types';
 
 const Button = ({ setPage }) => {
   return (
     <button
-      className="Button"
+      className={css.Button}
       type="button"
       onClick={() => setPage(current => current + 1)}
     >

@@ -1,6 +1,6 @@
 import Modal from '../Modal/Modal';
 import { useState } from 'react';
-import './App.css';
+import css from './App.module.css';
 import ImageGallery from '../ImageGallery/ImageGallery';
 export const App = () => {
   const [showModal, setShowModal] = useState(false);
@@ -14,13 +14,11 @@ export const App = () => {
   };
 
   return (
-    <div className="App">
+    <div className={css.App}>
       <ImageGallery onClick={toggleModal} />
       {showModal && (
-        <Modal IMGDescr={modalDescr} largeImg={modalImg} onClose={toggleModal}>
-          <button type="button" onClick={toggleModal}>
-            click
-          </button>
+        <Modal onClose={toggleModal}>
+          <img src={modalImg} alt={modalDescr} />
         </Modal>
       )}
     </div>

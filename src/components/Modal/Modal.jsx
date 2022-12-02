@@ -1,11 +1,11 @@
 import { createPortal } from 'react-dom';
 import { useEffect, useCallback } from 'react';
-import './Modal.css';
+import css from './Modal.module.css';
 import PropTypes from 'prop-types';
 
 const modalRoot = document.querySelector('#modal-root');
 
-const Modal = ({ onClose, largeImg, IMGDescr }) => {
+const Modal = ({ onClose, children }) => {
   const handleBackdropClick = e => {
     if (e.currentTarget === e.target) {
       onClose();
@@ -29,18 +29,14 @@ const Modal = ({ onClose, largeImg, IMGDescr }) => {
     };
   }, [handleKeyDown]);
   return createPortal(
-    <div className="Overlay" onClick={handleBackdropClick}>
-      <div className="Modal">
-        <img src={largeImg} alt={IMGDescr} />
-      </div>
+    <div className={css.Overlay} onClick={handleBackdropClick}>
+      <div className={css.Modal}>{children}</div>
     </div>,
     modalRoot
   );
 };
 
 Modal.propTypes = {
-  IMGDescr: PropTypes.string.isRequired,
-  largeImg: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
 };

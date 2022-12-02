@@ -4,7 +4,7 @@ import Button from 'components/Button/Button';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import Searchbar from 'components/Searchbar/Searchbar';
-import './ImageGallery.css';
+import css from './ImageGallery.module.css';
 import PropTypes from 'prop-types';
 
 const ImageGallery = ({ onClick }) => {
@@ -13,25 +13,17 @@ const ImageGallery = ({ onClick }) => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [showLoadMore, setshowLoadMore] = useState(false);
 
   const handleClick = (largeImg, IMGDescr) => {
     onClick(largeImg, IMGDescr);
   };
 
-  //   function usePreviousValue(value) {
-  //     const ref = useRef();
-  //     useEffect(() => {
-  //       ref.current = value;
-  //     });
-  //     return ref.current;
-  //   }
-
-  //   const previousPage = usePreviousValue(page);
-  //   const previousQuery = usePreviousValue(query);
   useEffect(() => {
     if (query === '') {
       return;
     }
+
     setLoading(true);
     fetch(`https://pixabay.com/api/?q=${query}&page=${page}&key=30826076-8f523437068dfd34b07c8f4ae&image_type=photo&orientation=horizontal&per_page=12
       `)
@@ -45,6 +37,13 @@ const ImageGallery = ({ onClick }) => {
         if (imgs.hits.length === 0) {
           alert('No such images');
         }
+
+        if (imgs.hits.length < 12) {
+          setshowLoadMore(false);
+        } else {
+          setshowLoadMore(true);
+        }
+
         return setImages(prev => [...prev, ...imgs.hits]);
       })
       .catch(err => setError(err))
@@ -53,6 +52,7 @@ const ImageGallery = ({ onClick }) => {
 
   const onSearch = data => {
     setImages([]);
+
     setPage(1);
     setQuery(data);
   };
@@ -63,7 +63,7 @@ const ImageGallery = ({ onClick }) => {
       {error && <div>{error.message}</div>}
 
       {images.length !== 0 && (
-        <ul className="ImageGallery">
+        <ul className={css.ImageGallery}>
           {images.map(item => (
             <ImageGalleryItem
               key={item.id}
@@ -87,7 +87,7 @@ const ImageGallery = ({ onClick }) => {
           />
         </div>
       )}
-      {images.length !== 0 && <Button setPage={setPage} />}
+      {showLoadMore && <Button setPage={setPage} />}
     </>
   );
 };

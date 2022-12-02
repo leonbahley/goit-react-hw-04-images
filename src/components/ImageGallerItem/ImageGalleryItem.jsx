@@ -1,4 +1,4 @@
-import './ImageGalleryItem.css';
+import css from './ImageGalleryItem.module.css';
 import PropTypes from 'prop-types';
 
 const ImageGalleryItem = ({ onClick, largeImg, smallImg, IMGDescr }) => {
@@ -7,8 +7,12 @@ const ImageGalleryItem = ({ onClick, largeImg, smallImg, IMGDescr }) => {
   };
 
   return (
-    <li className="ImageGalleryItem" onClick={handleClick}>
-      <img className="ImageGalleryItem-image" src={smallImg} alt={IMGDescr} />
+    <li className={css.ImageGalleryItem} onClick={handleClick}>
+      <img
+        className={css.ImageGalleryItemImage}
+        src={smallImg}
+        alt={IMGDescr}
+      />
     </li>
   );
 };

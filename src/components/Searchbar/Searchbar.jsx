@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ImSearch } from 'react-icons/im';
-import './Searchbar.css';
+import css from './Searchbar.module.css';
 import PropTypes from 'prop-types';
 
 const Searchbar = ({ onSearch }) => {
@@ -12,19 +12,20 @@ const Searchbar = ({ onSearch }) => {
       return;
     }
     onSearch(query);
+    setQuery('');
   };
 
   return (
-    <header className="Searchbar">
-      <form onSubmit={handleSubmit} className="SearchForm">
-        <button type="submit" className="SearchForm-button">
+    <header className={css.Searchbar}>
+      <form onSubmit={handleSubmit} className={css.SearchForm}>
+        <button type="submit" className={css.SearchFormButton}>
           <span className="button-label">
             <ImSearch />
           </span>
         </button>
 
         <input
-          className="SearchForm-input"
+          className={css.SearchFormInput}
           type="text"
           autoComplete="off"
           autoFocus
