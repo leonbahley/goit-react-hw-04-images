@@ -51,8 +51,10 @@ const ImageGallery = ({ onClick }) => {
   }, [page, query]);
 
   const onSearch = data => {
+    if (data === query) {
+      return;
+    }
     setImages([]);
-
     setPage(1);
     setQuery(data);
   };
